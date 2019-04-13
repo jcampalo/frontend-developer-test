@@ -1,0 +1,50 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["react", "jsx-a11y", "import"],
+  "globals": {
+    "fetch": false,
+    "__DEV__": false
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended",
+  ],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "defaultParams": true
+    }
+  },
+  "rules": {
+    "max-len": 0,
+    "arrow-body-style": 0,
+    "react/display-name": 0,
+    "react/prop-types": 0,
+    "react/sort-comp": 0,
+    "import/prefer-default-export": 0,
+    "import/no-unresolved": [2, { ignore: ['expo'] }],
+    "curly": [1, "all"],
+    "object-curly-newline": [
+      1,
+      {
+        "consistent": true,
+        "minProperties": 3
+      }
+    ],
+    "object-curly-spacing": [1, "always"],
+    "template-curly-spacing": [1, "never"],
+    "react/jsx-filename-extension": 0,
+    "react/jsx-one-expression-per-line": 0,
+    "comma-dangle": 0
+  }
+}
