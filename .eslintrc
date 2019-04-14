@@ -16,6 +16,7 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:jsx-a11y/recommended",
+    "airbnb"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
