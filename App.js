@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components/native';
 import {
- Platform, StatusBar
+  Platform, StatusBar
 } from 'react-native';
 import {
- AppLoading, Asset, Font, Icon
+  AppLoading, Asset, Font, Icon
 } from 'expo';
-import AppNavigator from './src/navigation/AppNavigator';
+import RootComponent from './src/RootComponent';
 
 const Wrapper = styled.View`
   flex: 1;
@@ -18,6 +18,7 @@ class App extends PureComponent {
   };
 
   loadResourcesAsync = async () => {
+    /* eslint-disable global-require */
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/robot-dev.png'),
@@ -26,14 +27,19 @@ class App extends PureComponent {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        roboto: require('./assets/fonts/Roboto-Regular.ttf'),
+        'roboto-light': require('./assets/fonts/Roboto-Light.ttf'),
+        'roboto-medium': require('./assets/fonts/Roboto-Medium.ttf'),
+        'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
+        'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
+        'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
+        'open-sans-light': require('./assets/fonts/OpenSans-Light.ttf'),
       }),
     ]);
+    /* eslint-disable global-require */
   }
 
-  handleLoadingError = error => {
+  handleLoadingError = (error) => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);
@@ -44,7 +50,10 @@ class App extends PureComponent {
   }
 
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    const { isLoadingComplete } = this.state;
+    const { skipLoadingScreen } = this.props;
+
+    if (!isLoadingComplete && !skipLoadingScreen) {
       return (
         <AppLoading
           startAsync={this.loadResourcesAsync}
@@ -57,7 +66,7 @@ class App extends PureComponent {
     return (
       <Wrapper>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
+        <RootComponent />
       </Wrapper>
     );
   }
