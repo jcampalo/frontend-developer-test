@@ -1,9 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
-import { ActivityIndicator } from 'react-native';
 
 import QueryContainer from '../containers/Wall/Query';
 import ProfilesContainer from '../containers/Wall/Profiles';
 import EmptyList from '../components/Wall/EmptyList';
+import Loader from '../components/Shared/Loader';
 import List from '../components/Wall/List';
 import Actions from '../components/Wall/Actions';
 
@@ -21,7 +21,7 @@ class WallScreen extends PureComponent {
         }) => {
           if (isLoading) {
             return (
-              <ActivityIndicator size="small" color="#000" />
+              <Loader />
             );
           }
 
@@ -33,12 +33,13 @@ class WallScreen extends PureComponent {
             <ProfilesContainer>
               {({
                 users,
+                isEmpty,
                 onDismiss,
                 onAccept,
                 onIndexChange,
                 onDelete
               }) => {
-                if (!users) {
+                if (isEmpty) {
                   return (
                     <EmptyList />
                   );
@@ -46,7 +47,11 @@ class WallScreen extends PureComponent {
 
                 return (
                   <Fragment>
-                    <List users={users} onIndexChange={onIndexChange} onDelete={onDelete} />
+                    <List
+                      users={users}
+                      onIndexChange={onIndexChange}
+                      onDelete={onDelete}
+                    />
                     <Actions onDismiss={onDismiss} onAccept={onAccept} />
                   </Fragment>
                 );

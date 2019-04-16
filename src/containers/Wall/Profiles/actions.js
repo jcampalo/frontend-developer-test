@@ -1,8 +1,8 @@
 import { actionTypes as at } from './constants';
 
-export const setCurrent = ({ key, id }) => ({
+export const setCurrent = ({ index }) => ({
   type: at.SET_CURRENT,
-  payload: { key, id }
+  payload: { index }
 });
 
 export const accept = ({ key }) => ({

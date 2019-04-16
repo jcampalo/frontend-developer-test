@@ -20,28 +20,16 @@ export const onFetch = action$ => action$.pipe(
   }).pipe(
     timeout(40000),
     takeUntil(action$.pipe(ofType(at.CANCEL))),
-    /*
-    mergeMap((response) => of({
-      ...response,
-      countries: response.countries
-        ? response.countries.reduce((acc, country) => {
-          if (acc.every(({ code }) => code !== country.code)) {
-            acc.push(country);
-          }
-
-          return acc;
-        }, []) : undefined,
-      paymentOptions: response.paymentOptions
-        ? response.paymentOptions.reduce((acc, paymentOption) => {
-          if (acc.every(({ code }) => code !== paymentOption.code)) {
-            acc.push(paymentOption);
-          }
-
-          return acc;
-        }, []) : undefined,
-    })),
-    */
     pluck('data'),
+    mergeMap(data => of(
+      Object.entries(data).reduce((acc, [key, item]) => ({
+        ...acc,
+        [`el${key}`]: {
+          ...item,
+          key: `el${key}`,
+        }
+      }), {})
+    )),
     mergeMap(data => [
       fetchSuccess({ data }),
     ]),

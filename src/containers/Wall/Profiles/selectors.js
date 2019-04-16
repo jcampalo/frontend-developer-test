@@ -21,51 +21,22 @@ const selectDeleted = () => createSelector(
   ({ deleted }) => deleted,
 );
 
-const selectCurrent = () => createSelector(
+const selectUsers = () => createSelector(
   selectStore,
   selectData(),
-  ({ current }, data) => {
-    if (current) {
-      const element = Object.keys(data)[current];
-
-      return {
-        key: element,
-        id: data[element].id
-      };
-    }
-
-    if (data) {
-      const firstElement = Object.keys(data)[0];
-
-      return {
-        key: firstElement,
-        id: data[firstElement].id
-      };
-    }
-
-    return {};
-  },
-);
-
-const selectUsers = () => createSelector(
-  selectData(),
-  selectCurrent(),
   selectAccepted(),
   selectDismissed(),
-  selectDeleted(),
-  (data, current, accepted, dismissed, deleted) => {
+  ({ current }, data, accepted, dismissed) => {
     if (data) {
       return Object.entries(data).reduce(
-        (acc, [key, value]) => {
-          if (!deleted[key]) {
-            acc.push({
-              key,
-              isCurrent: current.key === key,
-              isAccepted: !!accepted[key],
-              isDismissed: !!dismissed[key],
-              ...value
-            });
-          }
+        (acc, [key, value], index) => {
+          acc.push({
+            key,
+            isCurrent: current === index,
+            isAccepted: !!accepted[key],
+            isDismissed: !!dismissed[key],
+            ...value
+          });
 
           return acc;
         },
@@ -77,11 +48,51 @@ const selectUsers = () => createSelector(
   },
 );
 
+const selectNotDeletedUsers = () => createSelector(
+  selectUsers(),
+  (users) => {
+    if (users) {
+      return users.filter(({ isAccepted, isDismissed }) => !(isDismissed || isAccepted));
+    }
+
+    return [];
+  }
+);
+
+const selectIsEmpty = () => createSelector(
+  selectNotDeletedUsers(),
+  users => !users.length
+);
+
+const selectCurrent = () => createSelector(
+  selectStore,
+  selectNotDeletedUsers(),
+  ({ current }, users) => {
+    if (users) {
+      const index = current > users.length - 1 ? users.length - 1 : current;
+      const currentUser = users[index];
+
+      if (currentUser) {
+        const { key, id } = currentUser;
+
+        return {
+          index,
+          key,
+          id
+        };
+      }
+    }
+
+    return {};
+  },
+);
+
 export {
   selectStore,
   selectDismissed,
   selectAccepted,
   selectDeleted,
   selectCurrent,
+  selectIsEmpty,
   selectUsers,
 };

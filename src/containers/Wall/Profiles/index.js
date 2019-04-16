@@ -14,6 +14,7 @@ import {
 } from './actions';
 import {
   selectCurrent,
+  selectIsEmpty,
   selectUsers,
 } from './selectors';
 
@@ -26,36 +27,16 @@ class Profiles extends PureComponent {
 
   handleDelete = () => {
     const {
-      users, current, onDelete
+      current, onDelete
     } = this.props;
-    const { key } = users.reduce((acc, user) => {
-      if (acc.isFound) {
-        if (!acc.key) {
-          acc.key = user.key;
-        }
-      } else {
-        acc.isFound = user.key === current.key;
-      }
 
-      return acc;
-    }, {
-      isFound: false,
-    });
-
-    onDelete({ ...current, nextKey: key });
+    onDelete(current);
   }
 
   handleDismiss = () => {
     const { current, onDismiss } = this.props;
 
     onDismiss(current);
-  }
-
-  handleIndexChange = ({ index }) => {
-    const { users, onIndexChange } = this.props;
-    const { key, id } = users[index];
-
-    onIndexChange({ key, id });
   }
 
   render() {
@@ -66,7 +47,6 @@ class Profiles extends PureComponent {
       onAccept: this.handleAccept,
       onDelete: this.handleDelete,
       onDismiss: this.handleDismiss,
-      onIndexChange: this.handleIndexChange,
     });
   }
 }
@@ -88,6 +68,7 @@ export const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = createStructuredSelector({
   current: selectCurrent(),
+  isEmpty: selectIsEmpty(),
   users: selectUsers(),
 });
 

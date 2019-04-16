@@ -1,10 +1,9 @@
 import { actionTypes as at } from './constants';
 
 export const initialState = {
-  current: null,
+  current: 0,
   dismissed: {},
   accepted: {},
-  deleted: {},
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -12,7 +11,7 @@ const reducer = (state = initialState, { type, payload }) => {
     case at.SET_CURRENT: {
       return {
         ...state,
-        current: payload.key,
+        current: payload.index,
       };
     }
     case at.DISMISS: {
@@ -31,16 +30,6 @@ const reducer = (state = initialState, { type, payload }) => {
           ...state.accepted,
           [payload.key]: payload.key
         },
-      };
-    }
-    case at.DELETE_CURRENT: {
-      return {
-        ...state,
-        deleted: {
-          ...state.deleted,
-          [payload.key]: payload.key
-        },
-        current: payload.nextKey,
       };
     }
     default:

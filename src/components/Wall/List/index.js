@@ -1,59 +1,27 @@
-import React, { PureComponent, createRef } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 
-import Layout from '../../../constants/Layout';
+import List from '../../Shared/List';
 import Element from './Element';
-import * as S from './styled';
 
-class List extends PureComponent {
-  listRef = createRef();
-
-  getItemLayout = (data, index) => ({
-    length: Layout.window.width,
-    offset: Layout.window.width * index,
-    index
-  })
-
-  handleAnimationFinish = () => {
-    const { onDelete } = this.props;
-
-    if (onDelete) {
-      onDelete();
-    }
-  }
-
-  handleScrollEnd = (e) => {
-    const { onIndexChange } = this.props;
+class WallList extends PureComponent {
+  renderItem = ({
+    item
+  }) => {
     const {
-      contentOffset, layoutMeasurement, contentSize
-    } = e.nativeEvent;
-    const size = contentSize.width / layoutMeasurement.width;
-    const index = contentOffset.x * size / contentSize.width;
-
-    if (onIndexChange) {
-      onIndexChange({
-        index
-      });
-    }
-  }
-
-  renderItem = ({ item }) => {
-    const {
-      id,
       key,
       info,
       photos,
-      isAccepted,
       isDismissed,
+      isAccepted,
     } = item;
 
     return (
       <Element
+        isDeleted={isDismissed || isAccepted}
+        key={key}
         index={key}
-        id={id}
         info={info}
         photos={photos}
-        shouldDelete={isDismissed || isAccepted}
-        onAntimationFinish={this.handleAnimationFinish}
       />
     );
   }
@@ -61,24 +29,19 @@ class List extends PureComponent {
   render() {
     const {
       users,
+      onIndexChange,
     } = this.props;
 
     return (
-      <S.List
-        ref={this.listRef}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        initialNumToRender={1}
-        maxToRenderPerBatch={1}
-        windowSize={1}
-        data={users}
-        renderItem={this.renderItem}
-        getItemLayout={this.getItemLayout}
-        onMomentumScrollEnd={this.handleScrollEnd}
-      />
+      <Fragment>
+        <List
+          data={users}
+          renderItem={this.renderItem}
+          onIndexChange={onIndexChange}
+        />
+      </Fragment>
     );
   }
 }
 
-export default List;
+export default WallList;
