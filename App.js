@@ -4,7 +4,7 @@ import {
   Platform, StatusBar
 } from 'react-native';
 import {
-  AppLoading, Asset, Font, Icon
+  AppLoading, Font, Icon
 } from 'expo';
 import RootComponent from './src/RootComponent';
 
@@ -20,10 +20,6 @@ class App extends PureComponent {
   loadResourcesAsync = async () => {
     /* eslint-disable global-require */
     return Promise.all([
-      Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png'),
-      ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
@@ -31,9 +27,6 @@ class App extends PureComponent {
         'roboto-light': require('./assets/fonts/Roboto-Light.ttf'),
         'roboto-medium': require('./assets/fonts/Roboto-Medium.ttf'),
         'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf'),
-        'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
-        'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
-        'open-sans-light': require('./assets/fonts/OpenSans-Light.ttf'),
       }),
     ]);
     /* eslint-disable global-require */
