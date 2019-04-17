@@ -1,10 +1,10 @@
 # Frontend Developer Coding Challenge
 
-Hi! welcome to Feeld. As part of the recruitment process we want to know how you think, code and structure your work. In order to do that, we're going to ask you to complete this coding challenge. 
+Hi! welcome to Feeld. As part of the recruitment process we want to know how you think, code and structure your work. In order to do that, we're going to ask you to complete this coding challenge.
 
 ## Some background
 
-Feeld is a dating app. People are free to browse profiles and decide whether they like them or not. 
+Feeld is a dating app. People are free to browse profiles and decide whether they like them or not.
 
 ## What we expect
 
@@ -84,3 +84,67 @@ https://fld-devtest-api.herokuapp.com/api/v1/users
 
 GOOD LUCK!
 
+## Notes
+
+### Guide
+
+You must have Node and Expo cli installed in your machine:
+
+```
+npm install -g expo-cli
+```
+
+Install dependencies:
+
+```
+npm ci
+```
+
+Run the project:
+
+```
+npm start
+```
+
+### Other commands
+
+Unit test:
+
+```
+npm test
+```
+
+Unit test coverage report:
+
+```
+npm run test:coverage
+```
+
+Lint:
+
+```
+npm run lint
+```
+
+### Libraries
+
+- `redux` is the state management library, it's easy to understand and is a well known solution, it simplifies state management removing the dependecy on local states.
+- `reselect` is a nice combo with redux, you get memoization for free and it makes easy composing and deriving data from your state.
+- `react-redux` tool belt to connect redux with react.
+- `redux-observable` a middleware to combine the power of rxjs with redux to handle side effects.
+- `rxjs` reactive extensions for javascript, handling async processing without pain, it's one of the best solutions to handle async processing.
+- `styled-components`  with Native makes your code cleaner, also you can keep writing css-like meanwhile you have the ability to use them on web without any pain.
+
+### Tech choices and solutions
+
+- Project structure is pretty basic since the project is small, I could also group containers/components/helpers on domains instead per type of element.
+- Styled components always live within a folder called styled, this way is easy to search for specific components and folders are more clean of elements.
+- Components and containers are splited, containers are really limited to connect with redux state, that's why they always expose render props.
+- Injectors allows the developer to inject reducers and epics on demand, this way initializing the store is a lightweight process.
+- There are two containers, one is simply for fetching and storing the data, the other is responsible for handling the actions, this way we can use selectors and derive data, so we keep the state at minimum with less mutations, also allows developer more freedom to reuse or replace them.
+
+### Ideas
+
+- List element is using ScrollView, problem is that FlatList is too buggy on this version, so performance is a huge concern if the list is long.
+- Animations can be also improved, it takes time to refine them so that's why this are simple showcases.
+- Expo is a very limited option, it's nice as starter but in the long term is not an option, for example not having the option to update React Native.
