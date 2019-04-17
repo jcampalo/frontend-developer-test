@@ -13,24 +13,32 @@ const LABELS = {
 };
 
 const Info = ({ info, scrollState }) => {
-  const elements = Object.keys(LABELS).map(key => (
-    <Fragment key={key}>
-      <S.Label>{LABELS[key]}</S.Label>
-      <S.Text>
-        {Array.isArray(info[key]) ? (
-          info[key].reduce((acc, value) => `${acc}${value} `, '')
-        ) : info[key]}
-      </S.Text>
-    </Fragment>
-  ));
+  const elements = Object.keys(LABELS).map((key) => {
+    const values = info[key];
+
+    if (values) {
+      return (
+        <Fragment key={key}>
+          <S.Label>{LABELS[key]}</S.Label>
+          <S.Text>
+            {Array.isArray(values) ? (
+              values.reduce((acc, value) => `${acc}${value} `, '')
+            ) : values}
+          </S.Text>
+        </Fragment>
+      );
+    }
+
+    return undefined;
+  });
 
   return (
     <AnimatedWrapper
       style={{
         transform: [{
           translateY: scrollState.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, -45],
+            inputRange: [0, 2],
+            outputRange: [0, -40],
           }),
         }]
       }}

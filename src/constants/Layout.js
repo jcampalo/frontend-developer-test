@@ -9,4 +9,6 @@ export default {
     height,
   },
   isSmallDevice: width < 375,
+  isMediumSize: width >= 375 && width < 550,
+  isLarge: width >= 550,
 };

@@ -26,7 +26,9 @@ class WallScreen extends PureComponent {
           }
 
           if (error) {
-            return null;
+            return (
+              <EmptyList />
+            );
           }
 
           return (

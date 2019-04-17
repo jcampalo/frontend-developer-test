@@ -4,7 +4,6 @@ import { KEY } from './constants';
 import { initialState } from './reducer';
 
 const selectStore = state => state[KEY] || initialState;
-// const emtpyPositions = Array(20).fill({ key: 0 }).map((_, key) => ({ key: `${key}` }));
 
 const selectError = () => createSelector(
   selectStore,

@@ -68,9 +68,10 @@ class Element extends Component {
     const scrollState = scrollY.interpolate({
       inputRange: [
         0,
-        50,
+        40,
+        80,
       ],
-      outputRange: [0, 1],
+      outputRange: [0, 1, 2],
     });
 
     return (

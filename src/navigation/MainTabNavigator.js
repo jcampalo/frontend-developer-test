@@ -7,7 +7,7 @@ const WallStack = createStackNavigator({
 });
 
 WallStack.navigationOptions = {
-  tabBarLabel: 'Wall'
+  tabBarLabel: 'Profiles'
 };
 
 export default createBottomTabNavigator({

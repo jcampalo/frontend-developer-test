@@ -42,7 +42,7 @@ class App extends PureComponent {
   handleLoadingError = (error) => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
-    console.warn(error);
+    console.warn(error); // eslint-disable-line no-console
   }
 
   handleFinishLoading = () => {
